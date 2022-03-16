@@ -25,7 +25,7 @@ contract Whitelistooor is Ownable {
     // Add an address to the whitelist
     function addToWhitelist(address _toWhitelist) public onlyOwner {
         // Don't add if they're already on whitelist
-        require(!whitelisted[_toWhitelist], "You are already on the whitelist");
+        require(!whitelisted[_toWhitelist], "Address already on the whitelist");
         // Check to make sure there are whitelist spots available
         require(
             numCurrentlyWhitelisted < whitelistedAddressMax,
@@ -36,5 +36,20 @@ contract Whitelistooor is Ownable {
         whitelisted[_toWhitelist] = true;
         allWhitelisted.push(_toWhitelist);
         numCurrentlyWhitelisted++;
+    }
+
+    // Remove an address from the whitelist
+    function removeFromWhitelist(address _toRemove) public onlyOwner {
+        require(whitelisted[_toRemove], "Address not on whitelist");
+        whitelisted[_toRemove] = false;
+        numCurrentlyWhitelisted--;
+
+        allWhitelisted memory whitelist;
+        for (uint8 i = 0; i < whitelist.length; i++) {
+            if (whitelist[i] == _toRemove) {
+                whitelist.splice(i, 1);
+            }
+        }
+        return whitelist;
     }
 }
