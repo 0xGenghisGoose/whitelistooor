@@ -23,6 +23,7 @@ const config: HardhatUserConfig = {
   },
   paths: {
     artifacts: "./out",
+    sources: "./src/contracts/*",
   },
 };
 
