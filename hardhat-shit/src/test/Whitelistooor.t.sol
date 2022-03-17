@@ -3,7 +3,6 @@ pragma solidity ^0.8.0;
 
 import "ds-test/test.sol";
 import "src/contracts/Whitelistooor.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "./CheatCodes.sol";
 
 contract WhitelistooorTest is DSTest {
@@ -20,7 +19,7 @@ contract WhitelistooorTest is DSTest {
     }
 
     constructor() {
-        msg.sender = _owner;
+        _owner = msg.sender;
     }
 
     function setUp() public {

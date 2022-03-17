@@ -2,7 +2,6 @@
 pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Whitelistooor {
     address public _owner;
@@ -25,7 +24,7 @@ contract Whitelistooor {
     }
 
     constructor(uint8 _whitelistedAddressMax) {
-        msg.sender = _owner;
+        _owner = msg.sender;
         whitelistedAddressMax = _whitelistedAddressMax;
     }
 
@@ -46,11 +45,7 @@ contract Whitelistooor {
     }
 
     // Remove an address from the whitelist
-    function removeFromWhitelist(address _toRemove)
-        public
-        onlyOwner
-        returns (bool)
-    {
+    function removeFromWhitelist(address _toRemove) public onlyOwner {
         require(whitelisted[_toRemove], "Address not on whitelist");
         whitelisted[_toRemove] = false;
         numCurrentlyWhitelisted--;
@@ -63,7 +58,6 @@ contract Whitelistooor {
             }
             whitelist = allWhitelisted;
         }
-        return true;
         require(true, "Address removal failed");
     }
 }
