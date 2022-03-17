@@ -24,6 +24,13 @@ const Home: NextPage = () => {
 		return web3Provider;
 	};
 
+  const addToWhitelist = async () => {
+    try {
+      const signer = await getProviderOrSigner(true);
+      const whitelistContract = new ethers.Contract(WHITELIST_CONTRACT_ADDY, abi, signer);
+    }
+  }
+
 	return (
 		<div className={styles.container}>
 			<Head>
