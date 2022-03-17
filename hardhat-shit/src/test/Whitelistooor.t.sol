@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "ds-test/test.sol";
-import "src/contracts/Whitelistooor.sol";
+import "../contracts/Whitelistooor.sol";
 import "./CheatCodes.sol";
 
 contract WhitelistooorTest is DSTest {
@@ -11,7 +11,8 @@ contract WhitelistooorTest is DSTest {
     uint8 public numCurrentlyWhitelisted;
     address[] public allWhitelisted;
     mapping(address => bool) public whitelisted;
-    Whitelistooor whitelistContract;
+    Whitelistooor public whitelistContract;
+    CheatCodes cheats = CheatCodes(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D);
 
     modifier onlyOwner() {
         require(_owner == msg.sender, "You are not the owner");
@@ -27,12 +28,10 @@ contract WhitelistooorTest is DSTest {
         whitelistContract = new Whitelistooor(5);
     }
 
-    function testNumCurrentlyWhitelisted(address addy) public onlyOwner {
+    function testNumCurrentlyWhitelisted() public onlyOwner {
         assertEq(numCurrentlyWhitelisted, 0);
-        whitelistContract.addToWhitelist(addy);
-        assertEq(numCurrentlyWhitelisted, 1);
-        whitelistContract.addToWhitelist(addy);
-        assertEq(numCurrentlyWhitelisted, 2);
+        whitelistContract.addToWhitelist(_owner);
+        assertEq(whitelistContract.numCurrentlyWhitelisted(), 1);
     }
 
     function testWhitelistedAddressMax() public {
