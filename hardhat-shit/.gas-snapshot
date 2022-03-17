@@ -1,3 +1,2 @@
-WhitelistooorTest:testFailWhitelistedAddressMax(address) (runs: 256, μ: 70009, ~: 70009)
-WhitelistooorTest:testNumCurrentlyWhitelisted() (gas: 69928)
-WhitelistooorTest:testWhitelistedAddressMax() (gas: 1145)
+WhitelistooorTest:testNumCurrentlyWhitelisted() (gas: 53802)
+WhitelistooorTest:testWhitelistedAddressMax() (gas: 1123)

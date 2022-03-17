@@ -10,7 +10,9 @@ contract WhitelistooorTest is DSTest {
     uint8 public whitelistedAddressMax;
     uint8 public numCurrentlyWhitelisted;
     address[] public allWhitelisted;
+
     mapping(address => bool) public whitelisted;
+
     Whitelistooor public whitelistContract;
     CheatCodes cheats = CheatCodes(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D);
 
@@ -32,18 +34,11 @@ contract WhitelistooorTest is DSTest {
         assertEq(numCurrentlyWhitelisted, 0);
         whitelistContract.addToWhitelist(_owner);
         assertEq(whitelistContract.numCurrentlyWhitelisted(), 1);
+        whitelistContract.removeFromWhitelist(_owner);
+        assertEq(numCurrentlyWhitelisted, 0);
     }
 
     function testWhitelistedAddressMax() public {
         assertEq(whitelistContract.whitelistedAddressMax(), 5);
-    }
-
-    function testFailWhitelistedAddressMax(address addy) public onlyOwner {
-        whitelistContract.addToWhitelist(addy); // 1st
-        whitelistContract.addToWhitelist(addy); // 2nd
-        whitelistContract.addToWhitelist(addy); // 3rd
-        whitelistContract.addToWhitelist(addy); // 4th
-        whitelistContract.addToWhitelist(addy); // 5th
-        whitelistContract.addToWhitelist(addy); // 6th address added, should revert
     }
 }
