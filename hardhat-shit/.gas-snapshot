@@ -1,2 +1,3 @@
+WhitelistooorTest:testAddToWhitelist() (gas: 266161)
 WhitelistooorTest:testNumCurrentlyWhitelisted() (gas: 53802)
 WhitelistooorTest:testWhitelistedAddressMax() (gas: 1123)
