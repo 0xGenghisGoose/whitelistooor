@@ -34,6 +34,7 @@
   },
   "postinstall": "typechain",
   "dependencies": {
-    "@openzeppelin/contracts": "^4.5.0"
+    "@openzeppelin/contracts": "^4.5.0",
+    "tsconfig-paths": "^3.14.0"
   }
 }
