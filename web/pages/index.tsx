@@ -24,12 +24,23 @@ const Home: NextPage = () => {
 		return web3Provider;
 	};
 
-  const addToWhitelist = async () => {
-    try {
-      const signer = await getProviderOrSigner(true);
-      const whitelistContract = new ethers.Contract(WHITELIST_CONTRACT_ADDY, abi, signer);
-    }
-  }
+	const addToWhitelist = async () => {
+		try {
+			const signer = await getProviderOrSigner(true);
+			const whitelistContract = new ethers.Contract(
+				WHITELIST_CONTRACT_ADDY,
+				abi,
+				signer
+			);
+
+			const txn = await whitelistContract.addToWhitelist();
+			setLoading(true);
+			await txn.wait();
+			setJoinedWhitelist(true);
+		} catch (err) {
+			console.error(err);
+		}
+	};
 
 	return (
 		<div className={styles.container}>
