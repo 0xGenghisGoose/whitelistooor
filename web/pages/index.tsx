@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import ethers from 'ethers';
 import Web3Modal from 'web3modal';
 import Head from 'next/head';
+import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 import { WHITELIST_CONTRACT_ADDY, abi } from '../constants';
 
@@ -60,6 +61,33 @@ const Home: NextPage = () => {
 		}
 	};
 
+	const numCurrentlyWhitelisted = async () => {
+		try {
+			const provider = await getProviderOrSigner();
+			const whitelistContract = new ethers.Contract(
+				WHITELIST_CONTRACT_ADDY,
+				abi,
+				provider
+			);
+			const num = await whitelistContract.numCurrentlyWhitelisted();
+			setNumWhitelisted(num);
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	const addressInWhitelist = async () => {
+		const signer = await getProviderOrSigner(true);
+		const whitelistContract = new ethers.Contract(
+			WHITELIST_CONTRACT_ADDY,
+			abi,
+			signer
+		);
+		const addy = await ethers.utils.getAddress(signer.toString());
+		const temp = await whitelistContract.allWhitelisted(addy);
+		setJoinedWhitelist(temp);
+	};
+
 	const connectWallet = async () => {
 		try {
 			await getProviderOrSigner();
@@ -95,7 +123,18 @@ const Home: NextPage = () => {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<div></div>
+			<div>
+				<h1>Welcome to Whitelist Me!</h1>
+				<h3>
+					This is an easy frontend to interact with my Whitelistooor contract;
+					the full code can be found here:
+				</h3>
+				<a href='https://github.com/0xGenghisGoose/whitelistooor'>
+					Whitelistooor on GitHub
+				</a>
+				<div>{numWhitelisted}/10 spots left on the whitelist!</div>
+				{button()}
+			</div>
 		</div>
 	);
 };
