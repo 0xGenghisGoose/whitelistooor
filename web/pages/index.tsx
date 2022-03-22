@@ -43,8 +43,52 @@ const Home: NextPage = () => {
 		}
 	};
 
+	const removeFromWhitelist = async () => {
+		try {
+			const signer = await getProviderOrSigner(true);
+			const whitelistContract = new ethers.Contract(
+				WHITELIST_CONTRACT_ADDY,
+				abi,
+				signer
+			);
+			const txn = await whitelistContract.removeFromWhitelist();
+			setLoading(true);
+			await txn.wait();
+			setJoinedWhitelist(false);
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	const connectWallet = async () => {
+		try {
+			await getProviderOrSigner();
+			setWalletConnected(true);
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	const button = () => {
+		if (walletConnected) {
+			if (joinedWhitelist) {
+				return <div>You have now joined the whitelist!</div>;
+			} else if (loading) {
+				return <button>Loading...</button>;
+			} else {
+				return <button onClick={addToWhitelist}>Join the whitelist!</button>;
+			}
+		} else {
+			return (
+				<button onClick={connectWallet}>
+					Connect your wallet to join the whitelist!
+				</button>
+			);
+		}
+	};
+
 	return (
-		<div className={styles.container}>
+		<div>
 			<Head>
 				<title>Whitelist Me</title>
 				<meta name='description' content='Whitelist Me' />
