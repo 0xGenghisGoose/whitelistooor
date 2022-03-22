@@ -109,32 +109,45 @@ const Home: NextPage = () => {
 		} else {
 			return (
 				<button onClick={connectWallet}>
-					Connect your wallet to join the whitelist!
+					Connect your wallet to join the whitelist
 				</button>
 			);
 		}
 	};
 
 	return (
-		<div>
+		<div className=''>
 			<Head>
 				<title>Whitelist Me</title>
 				<meta name='description' content='Whitelist Me' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<div>
-				<h1>Welcome to Whitelist Me!</h1>
-				<h3>
+			<div className='min-h-[90vh] min-w-[75%] justify-center flex flex-col items-center leading-8 tracking-wide'>
+				<h1 className='pb-4 text-3xl'>
+					Welcome to <span className='text-green-400'>Whitelist Me!</span>
+				</h1>
+				<br />
+				<div className=''>
 					This is an easy frontend to interact with my Whitelistooor contract;
 					the full code can be found here:
-				</h3>
-				<a href='https://github.com/0xGenghisGoose/whitelistooor'>
+				</div>
+				<a
+					className='pt-4 text-green-400 text-lg underline'
+					href='https://github.com/0xGenghisGoose/whitelistooor'>
 					Whitelistooor on GitHub
 				</a>
-				<div>{numWhitelisted}/10 spots left on the whitelist!</div>
+				<br />
+				<div className='text-xl'>
+					{numWhitelisted} / 10 whitelist spots claimed
+				</div>
+				<br />
 				{button()}
 			</div>
+
+			<footer className='flex justify-center border-t-purple-400 border-t-4 py-6 mt-4'>
+				Made by 0xGenghisGoose
+			</footer>
 		</div>
 	);
 };
