@@ -103,14 +103,14 @@ const Home: NextPage = () => {
 				return <div>You have now joined the whitelist!</div>;
 			} else if (loading) {
 				return (
-					<button className='rounded-md bg-cyan-400 text-lg py-3 px-3 mt-8'>
+					<button className='rounded-md bg-cyan-400 text-lg py-4 px-4 mt-8'>
 						Loading...
 					</button>
 				);
 			} else {
 				return (
 					<button
-						className='rounded-md bg-cyan-400 hover:bg-cyan-300 text-lg py-3 px-3 mt-8'
+						className='rounded-md bg-cyan-400 hover:bg-cyan-300 text-lg py-4 px-4 mt-8'
 						onClick={addToWhitelist}>
 						Join the whitelist!
 					</button>
@@ -119,7 +119,7 @@ const Home: NextPage = () => {
 		} else {
 			return (
 				<button
-					className='rounded-md bg-cyan-400 hover:bg-cyan-300 text-lg py-3 px-3 mt-8'
+					className='rounded-md shadow-lg bg-cyan-400 hover:bg-cyan-300 text-lg py-4 px-4 mt-4'
 					onClick={connectWallet}>
 					Connect Your Wallet
 				</button>
@@ -128,37 +128,49 @@ const Home: NextPage = () => {
 	};
 
 	return (
-		<div className=''>
+		<div className='bg-gradient-to-r from-[#D7D1D1] via-[#f5f5f5] to-[#D7D1D1]'>
 			<Head>
 				<title>Whitelist Me</title>
 				<meta name='description' content='Whitelist Me' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
+			<div className='flex w-80 absolute top-20 left-12'>
+				<img src='./exhausted_computer_user.png' alt='comp' />
+			</div>
+
 			<div className='min-h-[90vh] min-w-[75%] justify-center flex flex-col items-center leading-8 tracking-wide'>
-				<h1 className='pb-8 text-3xl'>
+				<h1 className='pb-20 text-5xl'>
 					Welcome to <span className='text-green-400'>Whitelist Me!</span>
 				</h1>
 				<br />
-				<div className=''>
-					This is an easy frontend to interact with my Whitelistooor contract;
-					the full code can be found here:
+				<div className='text-lg leading-10'>
+					This is an easy frontend to interact with my Whitelistooor contract
 				</div>
+				<div className='text-lg'>The full code can be found below:</div>
 				<a
-					className='pt-4 text-green-400 text-lg underline'
+					className='pt-4 text-green-400 text-xl'
 					href='https://github.com/0xGenghisGoose/whitelistooor'>
 					Whitelistooor on GitHub
 				</a>
 				<br />
-				<div className='text-xl pt-4'>
+				<div className='text-2xl pt-4'>
 					{numWhitelisted} / 10 whitelist spots claimed
 				</div>
 				<br />
 				{button()}
+				<div className='flex w-96 ml-4 absolute bottom-20 right-12'>
+					<img className='' src='./sleeping_user.png' alt='sleep' />
+				</div>
 			</div>
 
-			<footer className='flex justify-center border-t-purple-400 border-t-4 py-6 mt-4'>
-				Made by 0xGenghisGoose
+			<footer className='flex justify-center bg-green-400 shadow-xl mt-12 py-4 font-semibold'>
+				Hastily thrown together by
+				<a
+					className='pl-1 text-rose-400'
+					href='https://github.com/0xgenghisgoose'>
+					0xGenghisGoose
+				</a>
 			</footer>
 		</div>
 	);
