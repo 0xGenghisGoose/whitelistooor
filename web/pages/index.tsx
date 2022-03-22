@@ -4,6 +4,7 @@ import ethers from 'ethers';
 import Web3Modal from 'web3modal';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
+import { WHITELIST_CONTRACT_ADDY, abi } from '../constants';
 
 const Home: NextPage = () => {
 	// STATE

@@ -1,29 +1,74 @@
 import * as dotenv from "dotenv";
-import "tsconfig-paths/register";
-
-import { HardhatUserConfig } from "hardhat/config";
+import * as toml from "toml";
+import { HardhatUserConfig, subtask } from "hardhat/config";
+import { readFileSync } from "fs";
+import { TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS } from "hardhat/builtin-tasks/task-names";
 import "@nomiclabs/hardhat-etherscan";
-import "@nomiclabs/hardhat-waffle";
+import "@nomiclabs/hardhat-ethers";
 import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
-
 dotenv.config();
 
+// default values here to avoid failures when running hardhat
+const RINKEBY_RPC = process.env.RINKEBY_RPC || "1".repeat(32);
+const PRIVATE_KEY = process.env.PRIVATE_KEY || "1".repeat(64);
+const SOLC_DEFAULT = "0.8.10";
+
+// try use forge config
+let foundry: any;
+try {
+  foundry = toml.parse(readFileSync("./foundry.toml").toString());
+  foundry.default.solc = foundry.default["solc-version"]
+    ? foundry.default["solc-version"]
+    : SOLC_DEFAULT;
+} catch (error) {
+  foundry = {
+    default: {
+      solc: SOLC_DEFAULT,
+    },
+  };
+}
+
+// prune forge style tests from hardhat paths
+subtask(TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS).setAction(
+  async (_, __, runSuper) => {
+    const paths = await runSuper();
+    return paths.filter((p: string) => !p.endsWith(".t.sol"));
+  }
+);
+
 const config: HardhatUserConfig = {
-  solidity: "0.8.4",
+  paths: {
+    cache: "cache-hardhat",
+    sources: "./src",
+    tests: "./integration",
+  },
+  defaultNetwork: "hardhat",
   networks: {
+    hardhat: { chainId: 1337 },
     rinkeby: {
-      url: process.env.ALCHEMY_RINKEBY_URL,
-      accounts:
-        process.env.RINKEBY_PRIVATE_KEY !== undefined
-          ? [process.env.RINKEBY_PRIVATE_KEY]
-          : [],
+      url: RINKEBY_RPC,
+      accounts: [PRIVATE_KEY],
     },
   },
-  paths: {
-    artifacts: "./out",
-    sources: "./src/contracts/*",
+  solidity: {
+    version: foundry.default?.solc || SOLC_DEFAULT,
+    settings: {
+      optimizer: {
+        enabled: foundry.default?.optimizer || true,
+        runs: foundry.default?.optimizer_runs || 200,
+      },
+    },
+  },
+  gasReporter: {
+    currency: "USD",
+    gasPrice: 77,
+    excludeContracts: ["src/test"],
+    coinmarketcap: process.env.CMC_KEY ?? "",
+  },
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY ?? "",
   },
 };
 
