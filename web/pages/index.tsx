@@ -102,14 +102,26 @@ const Home: NextPage = () => {
 			if (joinedWhitelist) {
 				return <div>You have now joined the whitelist!</div>;
 			} else if (loading) {
-				return <button>Loading...</button>;
+				return (
+					<button className='rounded-md bg-cyan-400 text-lg py-3 px-3 mt-8'>
+						Loading...
+					</button>
+				);
 			} else {
-				return <button onClick={addToWhitelist}>Join the whitelist!</button>;
+				return (
+					<button
+						className='rounded-md bg-cyan-400 hover:bg-cyan-300 text-lg py-3 px-3 mt-8'
+						onClick={addToWhitelist}>
+						Join the whitelist!
+					</button>
+				);
 			}
 		} else {
 			return (
-				<button onClick={connectWallet}>
-					Connect your wallet to join the whitelist
+				<button
+					className='rounded-md bg-cyan-400 hover:bg-cyan-300 text-lg py-3 px-3 mt-8'
+					onClick={connectWallet}>
+					Connect Your Wallet
 				</button>
 			);
 		}
@@ -124,7 +136,7 @@ const Home: NextPage = () => {
 			</Head>
 
 			<div className='min-h-[90vh] min-w-[75%] justify-center flex flex-col items-center leading-8 tracking-wide'>
-				<h1 className='pb-4 text-3xl'>
+				<h1 className='pb-8 text-3xl'>
 					Welcome to <span className='text-green-400'>Whitelist Me!</span>
 				</h1>
 				<br />
@@ -138,7 +150,7 @@ const Home: NextPage = () => {
 					Whitelistooor on GitHub
 				</a>
 				<br />
-				<div className='text-xl'>
+				<div className='text-xl pt-4'>
 					{numWhitelisted} / 10 whitelist spots claimed
 				</div>
 				<br />
