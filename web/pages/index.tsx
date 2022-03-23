@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
-import { useEffect, useState, useRef } from 'react';
-import ethers from 'ethers';
+import { useEffect, useState, useRef, MutableRefObject } from 'react';
+import { ethers } from 'ethers';
 import Web3Modal from 'web3modal';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -13,11 +13,16 @@ const Home: NextPage = () => {
 	const [loading, setLoading] = useState(false);
 	const [joinedWhitelist, setJoinedWhitelist] = useState(false);
 	const [numWhitelisted, setNumWhitelisted] = useState(0);
-	const web3ModalRef = useRef();
+	const [userAddy, setUserAddy]: any = useState();
+	const web3ModalRef: MutableRefObject<any> = useRef();
 
 	const getProviderOrSigner = async (needSigner = false) => {
 		const provider = await web3ModalRef.current.connect();
 		const web3Provider = new ethers.providers.Web3Provider(provider);
+
+		const userAcct = web3Provider.getSigner();
+		const userAddress = await userAcct.getAddress();
+		setUserAddy(userAddress);
 
 		if (needSigner) {
 			const signer = web3Provider.getSigner();
@@ -34,11 +39,11 @@ const Home: NextPage = () => {
 				abi,
 				signer
 			);
-
-			const txn = await whitelistContract.addToWhitelist();
+			const txn = await whitelistContract.addToWhitelist(userAddy);
 			setLoading(true);
 			await txn.wait();
 			setJoinedWhitelist(true);
+			numCurrentlyWhitelisted();
 		} catch (err) {
 			console.error(err);
 		}
@@ -84,7 +89,7 @@ const Home: NextPage = () => {
 			signer
 		);
 		const addy = await ethers.utils.getAddress(signer.toString());
-		const temp = await whitelistContract.allWhitelisted(addy);
+		const temp = await whitelistContract.whitelisted(addy);
 		setJoinedWhitelist(temp);
 	};
 
@@ -126,6 +131,17 @@ const Home: NextPage = () => {
 			);
 		}
 	};
+
+	useEffect(() => {
+		if (!walletConnected) {
+			web3ModalRef.current = new Web3Modal({
+				network: 'rinkeby',
+				providerOptions: {},
+				disableInjectedProvider: false,
+			});
+		}
+		numCurrentlyWhitelisted();
+	}, [walletConnected]);
 
 	return (
 		<div className='bg-gradient-to-r from-[#D7D1D1] via-[#f5f5f5] to-[#D7D1D1]'>

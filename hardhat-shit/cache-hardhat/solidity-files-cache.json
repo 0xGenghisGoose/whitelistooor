@@ -72,41 +72,6 @@
       "artifacts": [
         "console"
       ]
-    },
-    "/Users/fordpickert/Desktop/sandbox/whitelistoor/hardhat-shit/src/test/CheatCodes.sol": {
-      "lastModificationDate": 1647467592001,
-      "contentHash": "9584f037403f7045e673d268149b6df5",
-      "sourceName": "src/test/CheatCodes.sol",
-      "solcConfig": {
-        "version": "0.8.10",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "CheatCodes"
-      ]
     }
   }
 }

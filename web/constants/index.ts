@@ -1,5 +1,5 @@
 export const WHITELIST_CONTRACT_ADDY =
-	'0x5fbdb2315678afecb367f032d93f642f64180aa3';
+	'0xf50Ab9FfF25a7C09C4f41D95884Bf358589dB6Bf';
 
 export const abi = [
 	{

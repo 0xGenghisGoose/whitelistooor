@@ -11,8 +11,8 @@ import "solidity-coverage";
 dotenv.config();
 
 // default values here to avoid failures when running hardhat
-const RINKEBY_RPC = process.env.RINKEBY_RPC || "1".repeat(32);
-const PRIVATE_KEY = process.env.PRIVATE_KEY || "1".repeat(64);
+const RINKEBY_RPC = process.env.ALCHEMY_RINKEBY_URL || "1".repeat(32);
+const PRIVATE_KEY = process.env.RINKEBY_PRIVATE_KEY || "1".repeat(64);
 const SOLC_DEFAULT = "0.8.10";
 
 // try use forge config
@@ -66,9 +66,6 @@ const config: HardhatUserConfig = {
     gasPrice: 77,
     excludeContracts: ["src/test"],
     coinmarketcap: process.env.CMC_KEY ?? "",
-  },
-  etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY ?? "",
   },
 };
 
