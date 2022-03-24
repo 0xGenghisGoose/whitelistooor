@@ -29,7 +29,7 @@ contract Whitelistooor {
     }
 
     // Add an address to the whitelist
-    function addToWhitelist(address _toWhitelist) public onlyOwner {
+    function addToWhitelist(address _toWhitelist) public {
         // Don't add if they're already on whitelist
         require(!whitelisted[_toWhitelist], "Address already on the whitelist");
         // Check to make sure there are whitelist spots available

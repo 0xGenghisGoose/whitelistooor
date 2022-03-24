@@ -141,7 +141,7 @@ const Home: NextPage = () => {
 			});
 		}
 		numCurrentlyWhitelisted();
-	}, [walletConnected]);
+	}, [walletConnected, joinedWhitelist]);
 
 	return (
 		<div className='bg-gradient-to-r from-[#D7D1D1] via-[#f5f5f5] to-[#D7D1D1]'>
